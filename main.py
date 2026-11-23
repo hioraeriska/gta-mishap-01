@@ -16,12 +16,21 @@ SENTENCE = (
 )
 
 
+MAX_CHARS = 240
+
+
 def main() -> int:
+    # Guard the bounty rule: one sentence, at most 240 characters.
+    sentence = SENTENCE.strip()
+    if len(sentence) > MAX_CHARS:
+        raise ValueError(
+            f"entry is {len(sentence)} chars, over the {MAX_CHARS}-char limit"
+        )
     out_dir = os.environ.get("MAKEFUN_OUTPUT_DIR", "/output")
     os.makedirs(out_dir, exist_ok=True)
     path = os.path.join(out_dir, "entry.txt")
     with open(path, "w", encoding="utf-8") as f:
-        f.write(SENTENCE)
+        f.write(sentence)
     return 0
 
 
